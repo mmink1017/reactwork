@@ -7,8 +7,8 @@ export default function ButtonComponent({
   clickHandler = (e) => {
     alert("함수를 설정하세요");
   },
-  children,
   disabled = false,
+  children,
 }) {
   const baseClass = clsx("font-bold", "rounded-md", "px-2", "py-2", "border");
   const typeClass = {
@@ -44,7 +44,12 @@ export default function ButtonComponent({
       "hover:bg-red-600",
       "active:bg-red-900",
     ),
-    muted: clsx("bg-gray-500", "text-white"),
+    muted: clsx(
+      "bg-gray-500",
+      "text-white",
+      "hover:bg-gray-600",
+      "active:bg-gray-900",
+    ),
   };
   const sizeClass = {
     small: clsx("px-1", "py-1", "text-sm"),
@@ -53,11 +58,11 @@ export default function ButtonComponent({
   };
   return (
     <button
-      className={`${baseClass} ${disabled ? typeClass["muted"] : typeClass[type]} ${sizeClass[size]}`}
+      className={`${baseClass} ${typeClass[disabled ? "muted" : type]} ${sizeClass[size]}`}
       onClick={clickHandler}
+      disabled={disabled}
     >
       {children}
-      {disabled}
     </button>
   );
 }
