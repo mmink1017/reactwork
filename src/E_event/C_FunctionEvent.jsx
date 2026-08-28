@@ -1,9 +1,11 @@
 import React, { useState } from "react";
 import { eventHandler, debouncer, trottling } from "@/utils/handlers";
-const outerHandler = (setValue) => (e) => {
-  console.log(e);
-  console.log("외부에 선언한 함수");
-  setValue("outerHandler함수가 변경");
+const outerHandler = (setValue) => {
+  return (e) => {
+    console.log(e);
+    console.log("외부에 선언한 함수");
+    setValue("outerHandler에서 수정");
+  };
 };
 export default function C_FunctionEvent() {
   const btnStyle = "rounded border border-blue-300 bg-blue-300 p-2 text-white";
@@ -22,7 +24,7 @@ export default function C_FunctionEvent() {
           props값을 직접 접근할 수 있음
         </li>
         <li>
-          컴포넌트함수 외부선언: 페이지가 랜더링되도 재선언 하지 않음. state,
+          컴포넌트함수 외부선언 : 페이지가 랜더링되도 재선언 하지 않음. state,
           props에 직접 접근이 불가능함.
         </li>
       </ul>
@@ -30,47 +32,45 @@ export default function C_FunctionEvent() {
       <button className={btnStyle} onClick={innerHandler}>
         내부함수호출
       </button>
-      <h3>외부함수 핸들러 등록</h3>
+      <h3>외부에서 선언한 핸들러 등록</h3>
       <button className={btnStyle} onClick={outerHandler(setValue)}>
         외부함수 호출
       </button>
       <input className={btnStyle} type="text" onChange={eventHandler} />
       <p>{value}</p>
+
       <button
         className={btnStyle}
         onClick={(e) => {
           eventHandler(e, setValue);
         }}
       >
-        매개변수전달함수
+        매개변수 전달함수
       </button>
       <h3>Debouncer이용하기</h3>
       <p>
         지속적으로 발생하는 이벤트를 모두 실행하지 않고 특정 시간 이후에
-        마지막으로 발생한 이벤트만 실행
+        마지막으로 발생한 이벤트만 실행 - 입력창 설정
       </p>
       <article className="p-4 flex gap">
         <input
           type="text"
           className="max-w-fit rounded border bg-gray-100 focus:bg-white"
-          onChange={debouncer(
-            ((e) => {
-              console.log(e.target.value);
-              e.target.nextElementSibling.innerText = e.target.value;
-            },
-            500),
-          )}
+          onChange={debouncer((e) => {
+            console.log(e.target.value);
+            e.target.nextElementSibling.innerText = e.target.value;
+          }, 500)}
         />
         <span></span>
         <button
           onClick={debouncer((e) => {
             alert("조회하기");
-          }, 500)}
+          }, 100)}
         >
           조회하기
         </button>
       </article>
-      <h3>Trottling이용하기</h3>
+      <h3>Throttling이용하기</h3>
       <p>
         특정시간을 기준으로 주기적으로 실행하는 로직을 구성 - 이벤트에 의해
         데이터를 받아올때(무한스크롤)
@@ -79,42 +79,37 @@ export default function C_FunctionEvent() {
         className={btnStyle}
         onClick={trottling(() => {
           console.log("데이터 가져옴");
-          alert("데이터 가져옴");
-        }, 500)}
+        }, 1000)}
       >
-        데이터 가져옴
+        데이터 가져오기
       </button>
-      <div
-        id="throttling-test"
-        style={{ height: "100px", overflow: "auto" }}
-        onScroll={trottling(() => {
-          console.log("scroll이벤트 발생");
-        })}
-      >
-        All the way up Nuthin’ can stop me, I’m all the way up X2 B.B G, Tae,
-        대성이 유행이라지 마 Been there done it Bigbang ‘B.Thxxg’ Be somethin'
-        ?! Fan zone ‘뱅봉’ 빛날 희(熙) Everything big big big big WE anything
-        big big Everything big big big big That everything big’z me Our own way,
-        All the way up 구관이 명관 입이 떡 하니 벌써 20 years, man 스무고개
-        Twerk 성인식 적나라하게 World-Tour 끼가 XL 그니까 예술 하지 빅뱅이라
-        읽고 써 우주 앰버서더 Would you pick me up? Got a show live on earth
-        ‘ㅂ-ㅣ-ㄱ’ 알아서 기어와 우린 같이 따로 놀지 의식 공간도 초월하니 Big
-        Shots 살바도르 달리 We like to party after party, No sleep Ohhhh 다들
-        밖으로 나와 Go 크게 소리 질러 좋아 마침 오늘 붉은 노을 Yeah we do it
-        Yeah we do it Big big big big B.B G, Tae, 대성이 유행이라지 마 Been
-        there done it Bigbang ‘B.Thxxg’ Be somethin' ?! Fan zone ‘뱅봉’ 빛날
-        희(熙) Everything big big big big WE anything big big Everything big big
-        big big That everything big’z me 양자역학 발현 쌍팔년 South-Korean
-        맘마미아 깐따삐야 젊음의 도심 한가운데 청춘에 도취한 Boundary Everything
-        is big You know that I'm a G 떴다 하면 비행기 썼다 하면 일대기 Name
-        everything is BIG 불러 BANG of 아버지 Yeah this is how we do it Gettin’
-        down to business, Big genius 우린 같이 따로 놀지 날아다녀 링 나비같이
-        Big Shots 무하마드 알리 We like to party after party, No sleep Ohhhh
-        하늘 밖으로 나와 Go 크게 멀리 실컷 돌아 나침반은 푸른 노을 Yeah we do it
-        Yeah we do it Big big big big B.B G, Tae, 대성이 유행이라지 마 Been
-        there done it Bigbang ‘B.Thxxg’ Be somethin' ?! Fan zone ‘뱅봉’ 빛날
-        희(熙) Everything big big big big WE anything big big Everything big big
-        big big That everything big’z me
+      <div id="throttling-test" style={{ height: "100px", overflow: "auto" }} onScroll={trottling(()=>{
+        console.log("scroll이벤트 발생");
+      })}>
+        [성화] Your name stuck on my tongue No words but say too much Every time
+        I wanna go and get gone You stop me with one touch [윤호] 어지러워 너의
+        그 미소 눈이 멀어 Stuck in your halo 빠져버려 난 이제 포로 [산] I feel
+        like if we go Latina like, like [성화] Curves along her body got the
+        people calling it photoshop [산] She'll be going places wake up in Vegas
+        nah She don't stop [우영] 홀렸네 막 아득해 나도 몰라 어떡해 네게 빠져
+        허우적대 허우적대 허우적대 [여상] She's so BAD BAD BAD BAD BAD BAD BAD
+        She's so BAD [종호] Run it all night solo [산] BAD BAD BAD BAD BAD BAD
+        BAD She's so BAD [우영] Run it all night solo [민기] Tú me tienes loco,
+        toda la noche, loco contigo Wild when you tease, tan lento, ritmo
+        peligroso 짜릿해서 난 brr 떨려 넌 향기로운 amiga Bella figura, got that
+        peso 미쳐버려 Olé, mi Dios, so BAD [홍중] She way too fine for the room
+        But you know that I'm a real VIP member I don't even smoke, I don't, ooh
+        But she rollin so classic like a Cohiba Cuban Her voice in my head
+        that's all I wanna hear Got me writing poems, in my zone, Shakespeare
+        Caught in her web she a spidey 청양고추 Vibe she spicy Fuego [윤호]
+        She's so BAD BAD BAD BAD BAD BAD BAD She's so BAD [우영] Run it all
+        night solo [민기] BAD BAD BAD BAD BAD BAD BAD She's so BAD [종호] Run it
+        all night solo [우영] Yeah, she's so used to all 'em flashes Mona Lisa
+        The way she's dancing looking red hot señorita [종호] 난 너만 바래 내가
+        찾던 Euphoria 너에게 바치리 나의 La Victoria [성화] She's so BAD [산]
+        She's so BAD [윤호] She's so BAD every day Way she's moving up the tempo
+        Switching up the pace Love the way she's goin' loco [산] I feel like if
+        we go Latina like, like
       </div>
     </div>
   );

@@ -1,6 +1,7 @@
 import React, { useState } from "react";
 import clsx from "clsx";
 import ButtonComponent from "../../F_datamanage/props/sample/ButtonComponent";
+import { numberGenerator } from "@/utils/handlers";
 const type = ["식품", "전자기기", "악세사리", "주방용품", "기타"];
 const color = [
   { key: "빨강", value: "red" },
@@ -8,6 +9,7 @@ const color = [
   { key: "주황", value: "orange" },
   { key: "초록", value: "green" },
 ];
+const productNumGenerator = numberGenerator("PRD");
 export default function ProductInput({ setProducts }) {
   const [product, setProduct] = useState({
     productNo: 0,
@@ -17,11 +19,24 @@ export default function ProductInput({ setProducts }) {
     color: "",
   });
   const addProduct = (e) => {
+    const saveProduct = {
+      ...product,
+      productNo: productNumGenerator.next().value,
+    };
     setProducts((prev) => {
-      return [...prev, product];
+      return [...prev, saveProduct];
+    });
+    cancelProduct();
+  };
+  const cancelProduct = (e) => {
+    setProduct({
+      productNo: 0,
+      productName: "",
+      price: 0,
+      type: "",
+      color: "",
     });
   };
-  const cancelProduct = (e) => {};
   const productChangeHandler = (e) => {
     const { name, value } = e.target;
     setProduct((prev) => ({ ...prev, [name]: value }));
@@ -35,6 +50,7 @@ export default function ProductInput({ setProducts }) {
           placeholder="상품명 작성"
           className="p-1 border border-gray-200"
           name="productName"
+          value={product.productName}
           onChange={productChangeHandler}
         />
         <input
@@ -44,14 +60,16 @@ export default function ProductInput({ setProducts }) {
           min="1000"
           step="1000"
           name="price"
+          value={product.price}
           onChange={productChangeHandler}
         />
         <select
           className="p-1 border border-gray-2"
           name="type"
           onChange={productChangeHandler}
+          value={product.type}
         >
-          <option disabled value="" selected>
+          <option disabled value="">
             선택
           </option>
           {type.map((t, i) => (
@@ -69,6 +87,7 @@ export default function ProductInput({ setProducts }) {
                 type="radio"
                 value={value}
                 onChange={productChangeHandler}
+                checked={product.color == value}
               />
               <span className={clsx(`text-${value}-500`)}>{key}</span>
             </label>

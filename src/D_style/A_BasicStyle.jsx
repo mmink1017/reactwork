@@ -1,5 +1,6 @@
 import React from "react";
 import "../assets/css/basicStyle.css";
+
 // 인라인 방식으로 스타일 적용하기
 export default function A_BasicStyle() {
   const basicStyle = {
@@ -19,7 +20,7 @@ export default function A_BasicStyle() {
       </div>
       <div style={basicStyle}>basicStyle적용</div>
       <div style={{ ...basicStyle, width: "100%" }}>
-        basicStyle 부분수정해서{" "}
+        basicStyle 부분수정해서 적용
       </div>
       <h3>css파일로 설정된 스타일 적용하기</h3>
       <p>assets폴더에 *.css파일을 생성하고 import로 가져와 사용</p>
