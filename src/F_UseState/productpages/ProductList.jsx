@@ -5,7 +5,7 @@ import ButtonComponent from "../../F_datamanage/props/sample/ButtonComponent";
 export default function ProductList({ products, setProducts }) {
   const deleteProduct = (e) => {
     const newProducts = products.filter((_, i) => {
-      return !deleteTarget.includes(`${i}`);
+      return !deleteTarget.includes(i);
     });
     setProducts(newProducts);
     setDeleteTarget([]);
@@ -14,8 +14,24 @@ export default function ProductList({ products, setProducts }) {
   return (
     <div>
       <h2 className="text-xl font-bold">상품 리스트</h2>
-      <ButtonComponent size="small" type="danger" clickHandler={deleteProduct}>
-        삭제
+      <ButtonComponent
+        type="secondary"
+        clickHandler={() => {
+          setDeleteTarget(products.map((_, i) => i));
+        }}
+      >
+        전체선택
+      </ButtonComponent>
+      <ButtonComponent
+        type="primary"
+        clickHandler={() => {
+          setDeleteTarget([]);
+        }}
+      >
+        전체해제
+      </ButtonComponent>
+      <ButtonComponent type="danger" clickHandler={deleteProduct}>
+        상품삭제
       </ButtonComponent>
       <table className="w-200">
         <TableHeaderComponent
@@ -27,12 +43,18 @@ export default function ProductList({ products, setProducts }) {
             handler: (e) => {
               const { value, checked } = e.target;
               if (checked) {
-                setDeleteTarget((prev) => [...prev, value]);
+                const newDeleteTarget = Array.from(
+                  new Set([...deleteTarget, Number(value)]),
+                );
+                setDeleteTarget(newDeleteTarget);
               } else {
-                const filterData = deleteTarget.filter((d) => d != value);
+                const filterData = deleteTarget.filter(
+                  (d) => d !== Number(value),
+                );
                 setDeleteTarget(filterData);
               }
             },
+            deleteTarget: deleteTarget,
           }}
         />
       </table>

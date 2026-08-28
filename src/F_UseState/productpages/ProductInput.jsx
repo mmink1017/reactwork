@@ -37,7 +37,6 @@ export default function ProductInput({ setProducts }) {
       color: "",
     });
   };
-
   const productChangeHandler = (e) => {
     const { name, value } = e.target;
     setProduct((prev) => ({ ...prev, [name]: value }));

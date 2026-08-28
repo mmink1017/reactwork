@@ -17,6 +17,8 @@ import PropsContainer from "./F_datamanage/PropsContainer";
 import StateContainer from "./F_datamanage/StateContainer";
 import MemberContainer from "./F_UseState/MemberContainer";
 import ProductContainer from "./F_UseState/ProductContainer";
+import ProductSearch from "./F_UseState/ProductSearch";
+import ContextContainer from "./F_datamanage/ContextContainer";
 
 function App() {
   // return React.createElement("div", null, [
@@ -41,7 +43,9 @@ function App() {
       {/* <PropsContainer/> */}
       {/* <StateContainer /> */}
       {/* <MemberContainer /> */}
-      <ProductContainer />
+      {/* <ProductContainer /> */}
+      {/* <ProductSearch /> */}
+      <ContextContainer />
     </div>
   );
 }
