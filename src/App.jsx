@@ -19,6 +19,8 @@ import MemberContainer from "./F_UseState/MemberContainer";
 import ProductContainer from "./F_UseState/ProductContainer";
 import ProductSearch from "./F_UseState/ProductSearch";
 import ContextContainer from "./F_datamanage/ContextContainer";
+import HooksContainer from "./G_hooks/HooksContainer";
+import B_UseMemoTest from "./G_hooks/B_UseMemoTest";
 
 function App() {
   // return React.createElement("div", null, [
@@ -45,7 +47,9 @@ function App() {
       {/* <MemberContainer /> */}
       {/* <ProductContainer /> */}
       {/* <ProductSearch /> */}
-      <ContextContainer />
+      {/* <ContextContainer /> */}
+      <HooksContainer/>
+      {/* <B_UseMemoTest/> */}
     </div>
   );
 }
