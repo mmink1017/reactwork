@@ -1,9 +1,11 @@
 import React, {useReducer} from "react";
-import A_UseRefTest from "./A_UseRefTest";
-import NonUseMemoTest from "./child/NonUseMemoTest";
-import C_UseReducerTest from "./C_UseReducerTest";
-import { counterReducer } from "./reducers/reducer";
-import ReducerMemberContainer from "./reducercomponents/ReducerMemberContainer";
+// import A_UseRefTest from "./A_UseRefTest";
+// import NonUseMemoTest from "./child/NonUseMemoTest";
+// import C_UseReducerTest from "./C_UseReducerTest";
+// import { counterReducer } from "./reducers/reducer";
+// import ReducerMemberContainer from "./reducercomponents/ReducerMemberContainer";
+import D_CustomHook from "./D_CustomHook";
+import E_ExtraHook from "./E_ExtraHook";
 
 export default function HooksContainer() {
   return (
@@ -14,8 +16,10 @@ export default function HooksContainer() {
         useState, useEffect, useContext useRef, useMemo, useReducer, customhook
         ....
       </p>
-      <C_UseReducerTest/>
-      <ReducerMemberContainer/>
+      {/* <C_UseReducerTest/>
+      <ReducerMemberContainer/> */}
+      {/* <D_CustomHook/> */}
+      <E_ExtraHook/>
     </div>
   );
 }
