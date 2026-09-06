@@ -10,9 +10,12 @@
     "preview": "vite preview"
   },
   "dependencies": {
+    "chart": "^0.1.2",
+    "chart.js": "^4.5.1",
     "clsx": "^2.1.1",
     "react": "^19.2.8",
     "react-dom": "^19.2.8",
+    "react-router-dom": "^7.18.3",
     "styled-components": "^6.5.3"
   },
   "devDependencies": {
